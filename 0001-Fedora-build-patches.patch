@@ -1,0 +1,74 @@
+From 48ca98fe3d3c005f4a17fdd15a753ae955fd4920 Mon Sep 17 00:00:00 2001
+From: Vitaly Zaitsev <vitaly@easycoding.org>
+Date: Wed, 6 Feb 2019 21:28:22 +0100
+Subject: [PATCH] Fedora build patches.
+
+---
+ src/Makefile | 23 +++++++++--------------
+ 1 file changed, 9 insertions(+), 14 deletions(-)
+
+diff --git a/src/Makefile b/src/Makefile
+index f860a2d8..6e71b966 100644
+--- a/src/Makefile
++++ b/src/Makefile
+@@ -3,14 +3,14 @@
+ ## License.....: MIT
+ ##
+ 
+-SHARED                  := 0
++SHARED                  := 1
+ DEBUG                   := 0
+ PRODUCTION              := 1
+ PRODUCTION_VERSION      := v5.1.0
+ ENABLE_BRAIN            := 1
+ USE_SYSTEM_LZMA         := 0
+-USE_SYSTEM_OPENCL       := 0
+-USE_SYSTEM_XXHASH       := 0
++USE_SYSTEM_OPENCL       := 1
++USE_SYSTEM_XXHASH       := 1
+ 
+ ##
+ ## Detect Operating System
+@@ -91,6 +91,7 @@ INSTALL_FOLDER          ?= $(PREFIX)/bin
+ SHARED_ROOT_FOLDER      ?= $(PREFIX)/share
+ SHARED_FOLDER           ?= $(SHARED_ROOT_FOLDER)/hashcat
+ DOCUMENT_FOLDER         ?= $(SHARED_ROOT_FOLDER)/doc/hashcat
++BASHCOMP_FOLDER         ?= $(SHARED_ROOT_FOLDER)/bash-completion/completions
+ LIBRARY_FOLDER          ?= $(PREFIX)/lib
+ LIBRARY_DEV_ROOT_FOLDER ?= $(PREFIX)/include
+ LIBRARY_DEV_FOLDER      ?= $(LIBRARY_DEV_ROOT_FOLDER)/hashcat
+@@ -428,26 +429,20 @@ install_make_shared_root:
+ install_docs: install_make_shared_root
+ 	$(INSTALL) -m 755 -d                                                    $(DESTDIR)$(DOCUMENT_FOLDER)
+ 	$(INSTALL) -m 755 -d                                                    $(DESTDIR)$(DOCUMENT_FOLDER)/charsets
+-	$(INSTALL) -m 755 -d                                                    $(DESTDIR)$(DOCUMENT_FOLDER)/docs
+ 	$(INSTALL) -m 755 -d                                                    $(DESTDIR)$(DOCUMENT_FOLDER)/layouts
+ 	$(INSTALL) -m 755 -d                                                    $(DESTDIR)$(DOCUMENT_FOLDER)/masks
+ 	$(INSTALL) -m 755 -d                                                    $(DESTDIR)$(DOCUMENT_FOLDER)/rules
+-	$(INSTALL) -m 755 -d                                                    $(DESTDIR)$(DOCUMENT_FOLDER)/extra
+-	$(INSTALL) -m 755 -d                                                    $(DESTDIR)$(DOCUMENT_FOLDER)/extra/tab_completion
++	$(INSTALL) -m 755 -d                                                    $(DESTDIR)$(BASHCOMP_FOLDER)
+ 	$(INSTALL) -m 644 example.dict                                          $(DESTDIR)$(DOCUMENT_FOLDER)/
+ 	$(INSTALL) -m 644 example0.hash                                         $(DESTDIR)$(DOCUMENT_FOLDER)/
+ 	$(INSTALL) -m 644 example400.hash                                       $(DESTDIR)$(DOCUMENT_FOLDER)/
+ 	$(INSTALL) -m 644 example500.hash                                       $(DESTDIR)$(DOCUMENT_FOLDER)/
+-	$(INSTALL) -m 755 example0.sh                                           $(DESTDIR)$(DOCUMENT_FOLDER)/
+-	$(INSTALL) -m 755 example400.sh                                         $(DESTDIR)$(DOCUMENT_FOLDER)/
+-	$(INSTALL) -m 755 example500.sh                                         $(DESTDIR)$(DOCUMENT_FOLDER)/
+-	$(INSTALL) -m 644 extra/tab_completion/hashcat.sh                       $(DESTDIR)$(DOCUMENT_FOLDER)/extra/tab_completion/
+-	$(INSTALL) -m 644 extra/tab_completion/howto.txt                        $(DESTDIR)$(DOCUMENT_FOLDER)/extra/tab_completion/
+-	$(INSTALL) -m 755 extra/tab_completion/install                          $(DESTDIR)$(DOCUMENT_FOLDER)/extra/tab_completion/
++	$(INSTALL) -m 644 example0.sh                                           $(DESTDIR)$(DOCUMENT_FOLDER)/
++	$(INSTALL) -m 644 example400.sh                                         $(DESTDIR)$(DOCUMENT_FOLDER)/
++	$(INSTALL) -m 644 example500.sh                                         $(DESTDIR)$(DOCUMENT_FOLDER)/
++	$(INSTALL) -m 644 extra/tab_completion/hashcat.sh                       $(DESTDIR)$(BASHCOMP_FOLDER)/hashcat
+ 	$(FIND) charsets/ -type d -exec $(INSTALL) -m 755 -d                    $(DESTDIR)$(DOCUMENT_FOLDER)/{} \;
+ 	$(FIND) charsets/ -type f -exec $(INSTALL) -m 644 {}                    $(DESTDIR)$(DOCUMENT_FOLDER)/{} \;
+-	$(FIND) docs/     -type d -exec $(INSTALL) -m 755 -d                    $(DESTDIR)$(DOCUMENT_FOLDER)/{} \;
+-	$(FIND) docs/     -type f -exec $(INSTALL) -m 644 {}                    $(DESTDIR)$(DOCUMENT_FOLDER)/{} \;
+ 	$(FIND) layouts/  -type d -exec $(INSTALL) -m 755 -d                    $(DESTDIR)$(DOCUMENT_FOLDER)/{} \;
+ 	$(FIND) layouts/  -type f -exec $(INSTALL) -m 644 {}                    $(DESTDIR)$(DOCUMENT_FOLDER)/{} \;
+ 	$(FIND) masks/    -type d -exec $(INSTALL) -m 755 -d                    $(DESTDIR)$(DOCUMENT_FOLDER)/{} \;
+-- 
+2.20.1
+
