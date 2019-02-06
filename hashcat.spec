@@ -12,8 +12,6 @@ Patch0: 0001-Fedora-build-patches.patch
 BuildRequires: bash-completion
 BuildRequires: opencl-headers
 BuildRequires: xxhash-devel
-BuildRequires: xz-devel
-BuildRequires: gcc-c++
 BuildRequires: gcc
 
 Requires: bash-completion
