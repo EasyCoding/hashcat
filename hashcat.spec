@@ -24,8 +24,16 @@ CPUs, GPUs, and other hardware accelerators on Linux, Windows,
 and macOS, and has facilities to help enable distributed password
 cracking.
 
+%package devel
+Summary: Development files for %{name}
+Requires: %{name}%{?_isa} = %{?epoch:%{epoch}:}%{version}-%{release}
+
+%description devel
+%{summary}.
+
 %prep
 %autosetup -p1
+sed -e 's/\.\/hashcat/hashcat/' -i *.sh
 
 %build
 %set_build_flags
@@ -36,11 +44,16 @@ cracking.
 
 %files
 %license docs/license.txt
-%doc README.md docs/{changes,contact,credits,limits,performance,readme,rules,status_codes,team,user_manuals}.txt
-%{_bindir}/%{name}
-%{_libdir}/lib%{name}.so.5*
-%{_datadir}/%{name}
+%doc README.md
+%doc docs/{changes,contact,credits,limits,performance,readme,rules,status_codes,team,user_manuals}.txt
+%doc charsets/ layouts/ masks/ rules/
 %{_datadir}/bash-completion/completions/%{name}
+%{_libdir}/lib%{name}.so.%{version}
+%{_datadir}/%{name}
+%{_bindir}/%{name}
+
+%files devel
+%{_includedir}/%{name}
 
 %changelog
 * Wed Feb 06 2019 Vitaly Zaitsev <vitaly@easycoding.org> - 5.1.0-1
