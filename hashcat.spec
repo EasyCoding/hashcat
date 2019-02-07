@@ -16,8 +16,10 @@ BuildRequires: gcc
 
 Requires: mesa-libOpenCL%{?_isa}
 Requires: bash-completion
-
 Recommends: %{name}-doc
+
+# Upstream does not support Big Endian architectures.
+ExcludeArch: ppc64 s390x
 
 %description
 Hashcat is the world's fastest and most advanced password recovery
