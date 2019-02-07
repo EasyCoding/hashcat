@@ -36,7 +36,7 @@ Requires: %{name}%{?_isa} = %{?epoch:%{epoch}:}%{version}-%{release}
 
 %package doc
 Summary: Documentation files for %{name}
-Requires: %{name}%{?_isa} = %{?epoch:%{epoch}:}%{version}-%{release}
+Requires: %{name} = %{?epoch:%{epoch}:}%{version}-%{release}
 BuildArch: noarch
 
 %description doc
