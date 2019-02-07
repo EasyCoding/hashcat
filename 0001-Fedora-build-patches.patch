@@ -1,14 +1,14 @@
-From a1ce7fdfbcc5afc0f7264e0d364cf0f249f34481 Mon Sep 17 00:00:00 2001
+From b989ad64da65701c74f6df713784ccbe4060d860 Mon Sep 17 00:00:00 2001
 From: Vitaly Zaitsev <vitaly@easycoding.org>
 Date: Wed, 6 Feb 2019 21:28:22 +0100
 Subject: [PATCH] Fedora build patches.
 
 ---
- src/Makefile | 36 ++++++++----------------------------
- 1 file changed, 8 insertions(+), 28 deletions(-)
+ src/Makefile | 44 ++++++++------------------------------------
+ 1 file changed, 8 insertions(+), 36 deletions(-)
 
 diff --git a/src/Makefile b/src/Makefile
-index f860a2d8..c61c03d9 100644
+index f860a2d8..1f896bdc 100644
 --- a/src/Makefile
 +++ b/src/Makefile
 @@ -3,14 +3,14 @@
@@ -47,7 +47,7 @@ index f860a2d8..c61c03d9 100644
  else
  ifeq ($(DEBUG),2)
  CFLAGS                  += -DDEBUG -Og -ggdb
-@@ -426,37 +427,16 @@ install_make_shared_root:
+@@ -426,37 +427,8 @@ install_make_shared_root:
  	$(INSTALL) -m 755 -d                                                    $(DESTDIR)$(SHARED_ROOT_FOLDER)
  
  install_docs: install_make_shared_root
@@ -69,21 +69,21 @@ index f860a2d8..c61c03d9 100644
 -	$(INSTALL) -m 644 extra/tab_completion/hashcat.sh                       $(DESTDIR)$(DOCUMENT_FOLDER)/extra/tab_completion/
 -	$(INSTALL) -m 644 extra/tab_completion/howto.txt                        $(DESTDIR)$(DOCUMENT_FOLDER)/extra/tab_completion/
 -	$(INSTALL) -m 755 extra/tab_completion/install                          $(DESTDIR)$(DOCUMENT_FOLDER)/extra/tab_completion/
-+	$(INSTALL) -m 755 -d                                                    $(DESTDIR)$(BASHCOMP_FOLDER)
-+	$(INSTALL) -m 644 extra/tab_completion/hashcat.sh                       $(DESTDIR)$(BASHCOMP_FOLDER)/hashcat
- 	$(FIND) charsets/ -type d -exec $(INSTALL) -m 755 -d                    $(DESTDIR)$(DOCUMENT_FOLDER)/{} \;
- 	$(FIND) charsets/ -type f -exec $(INSTALL) -m 644 {}                    $(DESTDIR)$(DOCUMENT_FOLDER)/{} \;
+-	$(FIND) charsets/ -type d -exec $(INSTALL) -m 755 -d                    $(DESTDIR)$(DOCUMENT_FOLDER)/{} \;
+-	$(FIND) charsets/ -type f -exec $(INSTALL) -m 644 {}                    $(DESTDIR)$(DOCUMENT_FOLDER)/{} \;
 -	$(FIND) docs/     -type d -exec $(INSTALL) -m 755 -d                    $(DESTDIR)$(DOCUMENT_FOLDER)/{} \;
 -	$(FIND) docs/     -type f -exec $(INSTALL) -m 644 {}                    $(DESTDIR)$(DOCUMENT_FOLDER)/{} \;
- 	$(FIND) layouts/  -type d -exec $(INSTALL) -m 755 -d                    $(DESTDIR)$(DOCUMENT_FOLDER)/{} \;
- 	$(FIND) layouts/  -type f -exec $(INSTALL) -m 644 {}                    $(DESTDIR)$(DOCUMENT_FOLDER)/{} \;
- 	$(FIND) masks/    -type d -exec $(INSTALL) -m 755 -d                    $(DESTDIR)$(DOCUMENT_FOLDER)/{} \;
- 	$(FIND) masks/    -type f -exec $(INSTALL) -m 644 {}                    $(DESTDIR)$(DOCUMENT_FOLDER)/{} \;
- 	$(FIND) rules/    -type d -exec $(INSTALL) -m 755 -d                    $(DESTDIR)$(DOCUMENT_FOLDER)/{} \;
- 	$(FIND) rules/    -type f -exec $(INSTALL) -m 644 {}                    $(DESTDIR)$(DOCUMENT_FOLDER)/{} \;
+-	$(FIND) layouts/  -type d -exec $(INSTALL) -m 755 -d                    $(DESTDIR)$(DOCUMENT_FOLDER)/{} \;
+-	$(FIND) layouts/  -type f -exec $(INSTALL) -m 644 {}                    $(DESTDIR)$(DOCUMENT_FOLDER)/{} \;
+-	$(FIND) masks/    -type d -exec $(INSTALL) -m 755 -d                    $(DESTDIR)$(DOCUMENT_FOLDER)/{} \;
+-	$(FIND) masks/    -type f -exec $(INSTALL) -m 644 {}                    $(DESTDIR)$(DOCUMENT_FOLDER)/{} \;
+-	$(FIND) rules/    -type d -exec $(INSTALL) -m 755 -d                    $(DESTDIR)$(DOCUMENT_FOLDER)/{} \;
+-	$(FIND) rules/    -type f -exec $(INSTALL) -m 644 {}                    $(DESTDIR)$(DOCUMENT_FOLDER)/{} \;
 -	$(SED) $(SED_IN_PLACE) 's/\.\/hashcat/hashcat/'                         $(DESTDIR)$(DOCUMENT_FOLDER)/example0.sh
 -	$(SED) $(SED_IN_PLACE) 's/\.\/hashcat/hashcat/'                         $(DESTDIR)$(DOCUMENT_FOLDER)/example400.sh
 -	$(SED) $(SED_IN_PLACE) 's/\.\/hashcat/hashcat/'                         $(DESTDIR)$(DOCUMENT_FOLDER)/example500.sh
++	$(INSTALL) -m 755 -d                                                    $(DESTDIR)$(BASHCOMP_FOLDER)
++	$(INSTALL) -m 644 extra/tab_completion/hashcat.sh                       $(DESTDIR)$(BASHCOMP_FOLDER)/hashcat
  
  install_shared: install_make_shared_root
  	$(INSTALL) -m 755 -d                                                    $(DESTDIR)$(SHARED_FOLDER)

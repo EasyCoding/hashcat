@@ -3,7 +3,7 @@ Version: 5.1.0
 Release: 1%{?dist}
 Summary: Advanced password recovery utility
 
-License: MIT
+License: MIT and Public Domain
 URL: https://github.com/%{name}/%{name}
 
 Source0: %{url}/archive/v%{version}/%{name}-%{version}.tar.gz
@@ -14,7 +14,10 @@ BuildRequires: opencl-headers
 BuildRequires: xxhash-devel
 BuildRequires: gcc
 
+Requires: mesa-libOpenCL%{?_isa}
 Requires: bash-completion
+
+Recommends: %{name}-doc
 
 %description
 Hashcat is the world's fastest and most advanced password recovery
@@ -31,9 +34,18 @@ Requires: %{name}%{?_isa} = %{?epoch:%{epoch}:}%{version}-%{release}
 %description devel
 %{summary}.
 
+%package doc
+Summary: Documentation files for %{name}
+Requires: %{name}%{?_isa} = %{?epoch:%{epoch}:}%{version}-%{release}
+BuildArch: noarch
+
+%description doc
+%{summary}.
+
 %prep
 %autosetup -p1
 sed -e 's/\.\/hashcat/hashcat/' -i *.sh
+chmod -x *.sh
 
 %build
 %set_build_flags
@@ -46,8 +58,6 @@ ln -s lib%{name}.so.%{version} "%{buildroot}%{_libdir}/lib%{name}.so"
 %files
 %license docs/license.txt
 %doc README.md
-%doc docs/{changes,contact,credits,limits,performance,readme,rules,status_codes,team,user_manuals}.txt
-%doc charsets/ layouts/ masks/ rules/
 %{_datadir}/bash-completion/completions/%{name}
 %{_libdir}/lib%{name}.so.%{version}
 %{_datadir}/%{name}
@@ -56,6 +66,11 @@ ln -s lib%{name}.so.%{version} "%{buildroot}%{_libdir}/lib%{name}.so"
 %files devel
 %{_includedir}/%{name}
 %{_libdir}/lib%{name}.so
+
+%files doc
+%doc docs/{changes,contact,credits,limits,performance,readme,rules,status_codes,team,user_manuals}.txt
+%doc charsets/ layouts/ masks/ rules/
+%doc example.dict example*.sh
 
 %changelog
 * Wed Feb 06 2019 Vitaly Zaitsev <vitaly@easycoding.org> - 5.1.0-1
