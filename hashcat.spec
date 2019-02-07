@@ -1,6 +1,6 @@
 Name: hashcat
 Version: 5.1.0
-Release: 1%{?dist}
+Release: 2%{?dist}
 Summary: Advanced password recovery utility
 
 License: MIT and Public Domain
@@ -73,5 +73,8 @@ ln -s lib%{name}.so.%{version} "%{buildroot}%{_libdir}/lib%{name}.so"
 %doc example.dict example*.sh
 
 %changelog
+* Thu Feb 07 2019 Vitaly Zaitsev <vitaly@easycoding.org> - 5.1.0-2
+- Moved documentation to a separate package.
+
 * Wed Feb 06 2019 Vitaly Zaitsev <vitaly@easycoding.org> - 5.1.0-1
 - Initial SPEC release.
