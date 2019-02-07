@@ -44,6 +44,7 @@ BuildArch: noarch
 
 %prep
 %autosetup -p1
+rm -rf deps/{OpenCL-Headers,xxHash}
 sed -e 's/\.\/hashcat/hashcat/' -i *.sh
 chmod -x *.sh
 
