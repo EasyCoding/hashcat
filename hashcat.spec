@@ -21,7 +21,7 @@ Hashcat is the world's fastest and most advanced password recovery
 utility, supporting five unique modes of attack for over 200
 highly-optimized hashing algorithms. hashcat currently supports
 CPUs, GPUs, and other hardware accelerators on Linux, Windows,
-and macOS, and has facilities to help enable distributed password
+and Mac OS, and has facilities to help enable distributed password
 cracking.
 
 %package devel
@@ -41,6 +41,7 @@ sed -e 's/\.\/hashcat/hashcat/' -i *.sh
 
 %install
 %make_install PREFIX=%{_prefix} LIBRARY_FOLDER=%{_libdir}
+ln -s lib%{name}.so.%{version} "%{buildroot}%{_libdir}/lib%{name}.so"
 
 %files
 %license docs/license.txt
@@ -54,6 +55,7 @@ sed -e 's/\.\/hashcat/hashcat/' -i *.sh
 
 %files devel
 %{_includedir}/%{name}
+%{_libdir}/lib%{name}.so
 
 %changelog
 * Wed Feb 06 2019 Vitaly Zaitsev <vitaly@easycoding.org> - 5.1.0-1

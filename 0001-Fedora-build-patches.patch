@@ -1,14 +1,14 @@
-From 5a893e56974adfd0a60026951cc3b3e19806d532 Mon Sep 17 00:00:00 2001
+From a1ce7fdfbcc5afc0f7264e0d364cf0f249f34481 Mon Sep 17 00:00:00 2001
 From: Vitaly Zaitsev <vitaly@easycoding.org>
 Date: Wed, 6 Feb 2019 21:28:22 +0100
 Subject: [PATCH] Fedora build patches.
 
 ---
- src/Makefile | 32 ++++++--------------------------
- 1 file changed, 6 insertions(+), 26 deletions(-)
+ src/Makefile | 36 ++++++++----------------------------
+ 1 file changed, 8 insertions(+), 28 deletions(-)
 
 diff --git a/src/Makefile b/src/Makefile
-index f860a2d8..ba38313d 100644
+index f860a2d8..c61c03d9 100644
 --- a/src/Makefile
 +++ b/src/Makefile
 @@ -3,14 +3,14 @@
@@ -16,8 +16,9 @@ index f860a2d8..ba38313d 100644
  ##
  
 -SHARED                  := 0
+-DEBUG                   := 0
 +SHARED                  := 1
- DEBUG                   := 0
++DEBUG                   := 1
  PRODUCTION              := 1
  PRODUCTION_VERSION      := v5.1.0
  ENABLE_BRAIN            := 1
@@ -37,6 +38,15 @@ index f860a2d8..ba38313d 100644
  LIBRARY_FOLDER          ?= $(PREFIX)/lib
  LIBRARY_DEV_ROOT_FOLDER ?= $(PREFIX)/include
  LIBRARY_DEV_FOLDER      ?= $(LIBRARY_DEV_ROOT_FOLDER)/hashcat
+@@ -181,7 +182,7 @@ LFLAGS                  += -s
+ endif
+ else
+ ifeq ($(DEBUG),1)
+-CFLAGS                  += -DDEBUG -Og -ggdb
++CFLAGS                  += -DDEBUG -ggdb
+ else
+ ifeq ($(DEBUG),2)
+ CFLAGS                  += -DDEBUG -Og -ggdb
 @@ -426,37 +427,16 @@ install_make_shared_root:
  	$(INSTALL) -m 755 -d                                                    $(DESTDIR)$(SHARED_ROOT_FOLDER)
  
