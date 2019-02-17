@@ -16,7 +16,9 @@ BuildRequires: gcc
 
 Requires: mesa-libOpenCL%{?_isa}
 Requires: bash-completion
+%if 0%{?fedora}
 Recommends: %{name}-doc
+%endif
 
 # Upstream does not support Big Endian architectures.
 ExcludeArch: ppc64 s390x
