@@ -1,6 +1,6 @@
 Name: hashcat
 Version: 5.1.0
-Release: 2%{?dist}
+Release: 3%{?dist}
 Summary: Advanced password recovery utility
 
 License: MIT and Public Domain
@@ -14,10 +14,10 @@ BuildRequires: opencl-headers
 BuildRequires: xxhash-devel
 BuildRequires: gcc
 
-Requires: mesa-libOpenCL%{?_isa}
 Requires: bash-completion
 %if 0%{?fedora}
-Recommends: %{name}-doc
+Requires: mesa-libOpenCL%{?_isa}
+Recommends: %{name}-doc = %{?epoch:%{epoch}:}%{version}-%{release}
 %endif
 
 # Upstream does not support Big Endian architectures.
@@ -78,6 +78,9 @@ ln -s lib%{name}.so.%{version} "%{buildroot}%{_libdir}/lib%{name}.so"
 %doc example.dict example*.sh
 
 %changelog
+* Mon Feb 18 2019 Vitaly Zaitsev <vitaly@easycoding.org> - 5.1.0-3
+- Fixed problem with dependencies on EPEL7.
+
 * Thu Feb 07 2019 Vitaly Zaitsev <vitaly@easycoding.org> - 5.1.0-2
 - Moved documentation to a separate package.
 
