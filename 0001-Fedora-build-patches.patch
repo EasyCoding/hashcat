@@ -1,14 +1,14 @@
-From b989ad64da65701c74f6df713784ccbe4060d860 Mon Sep 17 00:00:00 2001
+From 39e368c12879d31e750f765d16bcb1021d1d0f35 Mon Sep 17 00:00:00 2001
 From: Vitaly Zaitsev <vitaly@easycoding.org>
 Date: Wed, 6 Feb 2019 21:28:22 +0100
 Subject: [PATCH] Fedora build patches.
 
 ---
- src/Makefile | 44 ++++++++------------------------------------
- 1 file changed, 8 insertions(+), 36 deletions(-)
+ src/Makefile | 47 ++++++++---------------------------------------
+ 1 file changed, 8 insertions(+), 39 deletions(-)
 
 diff --git a/src/Makefile b/src/Makefile
-index f860a2d8..1f896bdc 100644
+index f860a2d8..a2a6ed22 100644
 --- a/src/Makefile
 +++ b/src/Makefile
 @@ -3,14 +3,14 @@
@@ -16,9 +16,8 @@ index f860a2d8..1f896bdc 100644
  ##
  
 -SHARED                  := 0
--DEBUG                   := 0
 +SHARED                  := 1
-+DEBUG                   := 1
+ DEBUG                   := 0
  PRODUCTION              := 1
  PRODUCTION_VERSION      := v5.1.0
  ENABLE_BRAIN            := 1
@@ -38,8 +37,15 @@ index f860a2d8..1f896bdc 100644
  LIBRARY_FOLDER          ?= $(PREFIX)/lib
  LIBRARY_DEV_ROOT_FOLDER ?= $(PREFIX)/include
  LIBRARY_DEV_FOLDER      ?= $(LIBRARY_DEV_ROOT_FOLDER)/hashcat
-@@ -181,7 +182,7 @@ LFLAGS                  += -s
+@@ -175,13 +176,10 @@ CFLAGS                  += -Wextra
  endif
+ 
+ ifeq ($(DEBUG),0)
+-CFLAGS                  += -O2
+-ifneq ($(UNAME),Darwin)
+-LFLAGS                  += -s
+-endif
++CFLAGS                  += -DNDEBUG
  else
  ifeq ($(DEBUG),1)
 -CFLAGS                  += -DDEBUG -Og -ggdb
@@ -47,7 +53,7 @@ index f860a2d8..1f896bdc 100644
  else
  ifeq ($(DEBUG),2)
  CFLAGS                  += -DDEBUG -Og -ggdb
-@@ -426,37 +427,8 @@ install_make_shared_root:
+@@ -426,37 +424,8 @@ install_make_shared_root:
  	$(INSTALL) -m 755 -d                                                    $(DESTDIR)$(SHARED_ROOT_FOLDER)
  
  install_docs: install_make_shared_root
