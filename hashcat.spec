@@ -1,6 +1,6 @@
 Name: hashcat
 Version: 5.1.0
-Release: 5%{?dist}
+Release: 6%{?dist}
 Summary: Advanced password recovery utility
 
 License: MIT and Public Domain
@@ -78,6 +78,9 @@ ln -s lib%{name}.so.%{version} "%{buildroot}%{_libdir}/lib%{name}.so"
 %doc example.dict example*.sh
 
 %changelog
+* Wed Jan 29 2020 Fedora Release Engineering <releng@fedoraproject.org> - 5.1.0-6
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_32_Mass_Rebuild
+
 * Thu Jul 25 2019 Fedora Release Engineering <releng@fedoraproject.org> - 5.1.0-5
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_31_Mass_Rebuild
 
