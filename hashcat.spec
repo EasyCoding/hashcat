@@ -1,6 +1,6 @@
 Name: hashcat
 Version: 5.1.0
-Release: 6%{?dist}
+Release: 7%{?dist}
 Summary: Advanced password recovery utility
 
 License: MIT and Public Domain
@@ -16,7 +16,8 @@ BuildRequires: gcc
 
 Requires: bash-completion
 %if 0%{?fedora}
-Requires: mesa-libOpenCL%{?_isa}
+Recommends: mesa-libOpenCL%{?_isa}
+Recommends: pocl%{?_isa}
 Recommends: %{name}-doc = %{?epoch:%{epoch}:}%{version}-%{release}
 %endif
 
@@ -78,6 +79,10 @@ ln -s lib%{name}.so.%{version} "%{buildroot}%{_libdir}/lib%{name}.so"
 %doc example.dict example*.sh
 
 %changelog
+* Tue Feb 25 2020 Vitaly Zaitsev <vitaly@easycoding.org> - 5.1.0-7
+- Allow to install without mesa-libOpenCL.
+- Added pocl as a weak dependency on Fedora.
+
 * Wed Jan 29 2020 Fedora Release Engineering <releng@fedoraproject.org> - 5.1.0-6
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_32_Mass_Rebuild
 
