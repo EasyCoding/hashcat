@@ -1,6 +1,6 @@
 Name: hashcat
-Version: 5.1.0
-Release: 7%{?dist}
+Version: 6.0.0
+Release: 1%{?dist}
 Summary: Advanced password recovery utility
 
 License: MIT and Public Domain
@@ -79,6 +79,9 @@ ln -s lib%{name}.so.%{version} "%{buildroot}%{_libdir}/lib%{name}.so"
 %doc example.dict example*.sh
 
 %changelog
+* Wed Jun 17 2020 Vitaly Zaitsev <vitaly@easycoding.org> - 6.0.0-1
+- Updated to version 6.0.0.
+
 * Tue Feb 25 2020 Vitaly Zaitsev <vitaly@easycoding.org> - 5.1.0-7
 - Allow to install without mesa-libOpenCL.
 - Added pocl as a weak dependency on Fedora.
