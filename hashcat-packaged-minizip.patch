@@ -1,4 +1,4 @@
-From 19e90d3e78fe07c79764d544af8036b29677351f Mon Sep 17 00:00:00 2001
+From c964c32b303b8a830a2ed92a4ffe123276813817 Mon Sep 17 00:00:00 2001
 From: Vitaly Zaitsev <vitaly@easycoding.org>
 Date: Wed, 17 Jun 2020 11:24:51 +0200
 Subject: [PATCH 2/2] Fixed build against packaged version of minizip.
@@ -24,7 +24,7 @@ index feaa5d90..a346a8e2 100644
  int hc_lzma1_decompress (const unsigned char *in, SizeT *in_len, unsigned char *out, SizeT *out_len, const char *props);
  int hc_lzma2_decompress (const unsigned char *in, SizeT *in_len, unsigned char *out, SizeT *out_len, const char *props);
 diff --git a/src/Makefile b/src/Makefile
-index 517bbc77..8b38d62d 100644
+index 1befae34..68681baf 100644
 --- a/src/Makefile
 +++ b/src/Makefile
 @@ -218,7 +218,7 @@ endif

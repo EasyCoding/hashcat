@@ -1,3 +1,12 @@
+# hashcat require an ancient version of minizip.
+# On Fedora we can use compatibility package, but
+# on RHEL we must use bundled version.
+%if 0%{?fedora}
+%bcond_without zlib
+%else
+%bcond_with zlib
+%endif
+
 Name: hashcat
 Version: 6.0.0
 Release: 1%{?dist}
@@ -10,12 +19,18 @@ Source0: %{url}/archive/v%{version}/%{name}-%{version}.tar.gz
 Patch0: %{name}-build-fixes.patch
 Patch1: %{name}-packaged-minizip.patch
 
-BuildRequires: minizip-compat-devel
 BuildRequires: bash-completion
 BuildRequires: opencl-headers
 BuildRequires: xxhash-devel
 BuildRequires: zlib-devel
 BuildRequires: gcc
+
+%if %{with zlib}
+BuildRequires: minizip-compat-devel
+%else
+Provides: bundled(zlib) = 1.2.11
+Provides: bundled(minizip) = 1.2.11
+%endif
 
 Requires: bash-completion
 %if 0%{?fedora}
@@ -51,14 +66,25 @@ BuildArch: noarch
 %{summary}.
 
 %prep
-%autosetup -p1
-rm -rf deps/{OpenCL-Headers,xxHash,zlib}
+%setup -q
+%patch0 -p1
+rm -rf deps/{OpenCL-Headers,xxHash}
+%if %{with zlib}
+%patch1 -p1
+rm -rf deps/zlib
+%endif
 sed -e 's/\.\/hashcat/hashcat/' -i *.sh
 chmod -x *.sh
 
 %build
 %set_build_flags
-%make_build PREFIX=%{_prefix}
+%make_build \
+    PREFIX=%{_prefix} \
+%if %{with zlib}
+    USE_SYSTEM_ZLIB=1
+%else
+    USE_SYSTEM_ZLIB=0
+%endif
 
 %install
 %make_install PREFIX=%{_prefix} LIBRARY_FOLDER=%{_libdir}
