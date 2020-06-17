@@ -5,13 +5,16 @@ Summary: Advanced password recovery utility
 
 License: MIT and Public Domain
 URL: https://github.com/%{name}/%{name}
-
 Source0: %{url}/archive/v%{version}/%{name}-%{version}.tar.gz
-Patch0: 0001-Fedora-build-patches.patch
 
+Patch0: %{name}-build-fixes.patch
+Patch1: %{name}-packaged-minizip.patch
+
+BuildRequires: minizip-compat-devel
 BuildRequires: bash-completion
 BuildRequires: opencl-headers
 BuildRequires: xxhash-devel
+BuildRequires: zlib-devel
 BuildRequires: gcc
 
 Requires: bash-completion
