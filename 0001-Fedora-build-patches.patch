@@ -1,17 +1,17 @@
-From 39e368c12879d31e750f765d16bcb1021d1d0f35 Mon Sep 17 00:00:00 2001
+From 5f840248674ec5658346e3a6e79cd6bc3be54352 Mon Sep 17 00:00:00 2001
 From: Vitaly Zaitsev <vitaly@easycoding.org>
-Date: Wed, 6 Feb 2019 21:28:22 +0100
+Date: Wed, 17 Jun 2020 10:57:15 +0200
 Subject: [PATCH] Fedora build patches.
 
 ---
- src/Makefile | 47 ++++++++---------------------------------------
- 1 file changed, 8 insertions(+), 39 deletions(-)
+ src/Makefile | 49 +++++++++----------------------------------------
+ 1 file changed, 9 insertions(+), 40 deletions(-)
 
 diff --git a/src/Makefile b/src/Makefile
-index f860a2d8..a2a6ed22 100644
+index af29457c..517bbc77 100644
 --- a/src/Makefile
 +++ b/src/Makefile
-@@ -3,14 +3,14 @@
+@@ -3,16 +3,16 @@
  ## License.....: MIT
  ##
  
@@ -19,17 +19,29 @@ index f860a2d8..a2a6ed22 100644
 +SHARED                  := 1
  DEBUG                   := 0
  PRODUCTION              := 1
- PRODUCTION_VERSION      := v5.1.0
+ PRODUCTION_VERSION      := v6.0.0
+ ENABLE_CUBIN            := 1
  ENABLE_BRAIN            := 1
  USE_SYSTEM_LZMA         := 0
+-USE_SYSTEM_ZLIB         := 0
 -USE_SYSTEM_OPENCL       := 0
 -USE_SYSTEM_XXHASH       := 0
++USE_SYSTEM_ZLIB         := 1
 +USE_SYSTEM_OPENCL       := 1
 +USE_SYSTEM_XXHASH       := 1
  
  ##
  ## Detect Operating System
-@@ -91,6 +91,7 @@ INSTALL_FOLDER          ?= $(PREFIX)/bin
+@@ -40,7 +40,7 @@ endif
+ ## Makefile flags
+ ##
+ 
+-MAKEFLAGS               += -l -j 8 -rR --no-print-directory
++MAKEFLAGS               += -l -rR --no-print-directory
+ 
+ ifneq ($(findstring clean,$(MAKECMDGOALS)),)
+ MAKEFLAGS               += -j 1
+@@ -101,6 +101,7 @@ INSTALL_FOLDER          ?= $(PREFIX)/bin
  SHARED_ROOT_FOLDER      ?= $(PREFIX)/share
  SHARED_FOLDER           ?= $(SHARED_ROOT_FOLDER)/hashcat
  DOCUMENT_FOLDER         ?= $(SHARED_ROOT_FOLDER)/doc/hashcat
@@ -37,7 +49,7 @@ index f860a2d8..a2a6ed22 100644
  LIBRARY_FOLDER          ?= $(PREFIX)/lib
  LIBRARY_DEV_ROOT_FOLDER ?= $(PREFIX)/include
  LIBRARY_DEV_FOLDER      ?= $(LIBRARY_DEV_ROOT_FOLDER)/hashcat
-@@ -175,13 +176,10 @@ CFLAGS                  += -Wextra
+@@ -186,10 +187,7 @@ CFLAGS_ZLIB             += -DIOAPI_NO_64
  endif
  
  ifeq ($(DEBUG),0)
@@ -48,12 +60,8 @@ index f860a2d8..a2a6ed22 100644
 +CFLAGS                  += -DNDEBUG
  else
  ifeq ($(DEBUG),1)
--CFLAGS                  += -DDEBUG -Og -ggdb
-+CFLAGS                  += -DDEBUG -ggdb
- else
- ifeq ($(DEBUG),2)
- CFLAGS                  += -DDEBUG -Og -ggdb
-@@ -426,37 +424,8 @@ install_make_shared_root:
+ ifneq ($(UNAME),Darwin)
+@@ -406,37 +404,8 @@ install_make_shared_root:
  	$(INSTALL) -m 755 -d                                                    $(DESTDIR)$(SHARED_ROOT_FOLDER)
  
  install_docs: install_make_shared_root
@@ -94,5 +102,5 @@ index f860a2d8..a2a6ed22 100644
  install_shared: install_make_shared_root
  	$(INSTALL) -m 755 -d                                                    $(DESTDIR)$(SHARED_FOLDER)
 -- 
-2.20.1
+2.26.2
 
