@@ -1,14 +1,14 @@
-From 6584ca99e97c0d72557aa7fd4b9f31d038201b02 Mon Sep 17 00:00:00 2001
+From ba735dbda88f0881b5193eeebc731bd2065202af Mon Sep 17 00:00:00 2001
 From: Vitaly Zaitsev <vitaly@easycoding.org>
 Date: Wed, 17 Jun 2020 10:57:15 +0200
 Subject: [PATCH 1/2] Fedora build patches.
 
 ---
- src/Makefile | 49 +++++++++----------------------------------------
- 1 file changed, 9 insertions(+), 40 deletions(-)
+ src/Makefile | 19 ++++++++-----------
+ 1 file changed, 8 insertions(+), 11 deletions(-)
 
 diff --git a/src/Makefile b/src/Makefile
-index af29457c..1befae34 100644
+index af29457c..f5799a75 100644
 --- a/src/Makefile
 +++ b/src/Makefile
 @@ -3,16 +3,16 @@
@@ -41,15 +41,7 @@ index af29457c..1befae34 100644
  
  ifneq ($(findstring clean,$(MAKECMDGOALS)),)
  MAKEFLAGS               += -j 1
-@@ -101,6 +101,7 @@ INSTALL_FOLDER          ?= $(PREFIX)/bin
- SHARED_ROOT_FOLDER      ?= $(PREFIX)/share
- SHARED_FOLDER           ?= $(SHARED_ROOT_FOLDER)/hashcat
- DOCUMENT_FOLDER         ?= $(SHARED_ROOT_FOLDER)/doc/hashcat
-+BASHCOMP_FOLDER         ?= $(SHARED_ROOT_FOLDER)/bash-completion/completions
- LIBRARY_FOLDER          ?= $(PREFIX)/lib
- LIBRARY_DEV_ROOT_FOLDER ?= $(PREFIX)/include
- LIBRARY_DEV_FOLDER      ?= $(LIBRARY_DEV_ROOT_FOLDER)/hashcat
-@@ -186,10 +187,7 @@ CFLAGS_ZLIB             += -DIOAPI_NO_64
+@@ -186,10 +186,7 @@ CFLAGS_ZLIB             += -DIOAPI_NO_64
  endif
  
  ifeq ($(DEBUG),0)
@@ -61,46 +53,24 @@ index af29457c..1befae34 100644
  else
  ifeq ($(DEBUG),1)
  ifneq ($(UNAME),Darwin)
-@@ -406,37 +404,8 @@ install_make_shared_root:
- 	$(INSTALL) -m 755 -d                                                    $(DESTDIR)$(SHARED_ROOT_FOLDER)
+@@ -391,7 +388,7 @@ Only Linux, FreeBSD and Darwin can use the 'install' target
+ endif
  
- install_docs: install_make_shared_root
--	$(INSTALL) -m 755 -d                                                    $(DESTDIR)$(DOCUMENT_FOLDER)
--	$(INSTALL) -m 755 -d                                                    $(DESTDIR)$(DOCUMENT_FOLDER)/charsets
--	$(INSTALL) -m 755 -d                                                    $(DESTDIR)$(DOCUMENT_FOLDER)/docs
--	$(INSTALL) -m 755 -d                                                    $(DESTDIR)$(DOCUMENT_FOLDER)/layouts
--	$(INSTALL) -m 755 -d                                                    $(DESTDIR)$(DOCUMENT_FOLDER)/masks
--	$(INSTALL) -m 755 -d                                                    $(DESTDIR)$(DOCUMENT_FOLDER)/rules
--	$(INSTALL) -m 755 -d                                                    $(DESTDIR)$(DOCUMENT_FOLDER)/extra
--	$(INSTALL) -m 755 -d                                                    $(DESTDIR)$(DOCUMENT_FOLDER)/extra/tab_completion
--	$(INSTALL) -m 644 example.dict                                          $(DESTDIR)$(DOCUMENT_FOLDER)/
--	$(INSTALL) -m 644 example0.hash                                         $(DESTDIR)$(DOCUMENT_FOLDER)/
--	$(INSTALL) -m 644 example400.hash                                       $(DESTDIR)$(DOCUMENT_FOLDER)/
--	$(INSTALL) -m 644 example500.hash                                       $(DESTDIR)$(DOCUMENT_FOLDER)/
--	$(INSTALL) -m 755 example0.sh                                           $(DESTDIR)$(DOCUMENT_FOLDER)/
--	$(INSTALL) -m 755 example400.sh                                         $(DESTDIR)$(DOCUMENT_FOLDER)/
--	$(INSTALL) -m 755 example500.sh                                         $(DESTDIR)$(DOCUMENT_FOLDER)/
--	$(INSTALL) -m 644 extra/tab_completion/hashcat.sh                       $(DESTDIR)$(DOCUMENT_FOLDER)/extra/tab_completion/
--	$(INSTALL) -m 644 extra/tab_completion/howto.txt                        $(DESTDIR)$(DOCUMENT_FOLDER)/extra/tab_completion/
--	$(INSTALL) -m 755 extra/tab_completion/install                          $(DESTDIR)$(DOCUMENT_FOLDER)/extra/tab_completion/
--	$(FIND) charsets/ -type d -exec $(INSTALL) -m 755 -d                    $(DESTDIR)$(DOCUMENT_FOLDER)/{} \;
--	$(FIND) charsets/ -type f -exec $(INSTALL) -m 644 {}                    $(DESTDIR)$(DOCUMENT_FOLDER)/{} \;
--	$(FIND) docs/     -type d -exec $(INSTALL) -m 755 -d                    $(DESTDIR)$(DOCUMENT_FOLDER)/{} \;
--	$(FIND) docs/     -type f -exec $(INSTALL) -m 644 {}                    $(DESTDIR)$(DOCUMENT_FOLDER)/{} \;
--	$(FIND) layouts/  -type d -exec $(INSTALL) -m 755 -d                    $(DESTDIR)$(DOCUMENT_FOLDER)/{} \;
--	$(FIND) layouts/  -type f -exec $(INSTALL) -m 644 {}                    $(DESTDIR)$(DOCUMENT_FOLDER)/{} \;
--	$(FIND) masks/    -type d -exec $(INSTALL) -m 755 -d                    $(DESTDIR)$(DOCUMENT_FOLDER)/{} \;
--	$(FIND) masks/    -type f -exec $(INSTALL) -m 644 {}                    $(DESTDIR)$(DOCUMENT_FOLDER)/{} \;
--	$(FIND) rules/    -type d -exec $(INSTALL) -m 755 -d                    $(DESTDIR)$(DOCUMENT_FOLDER)/{} \;
--	$(FIND) rules/    -type f -exec $(INSTALL) -m 644 {}                    $(DESTDIR)$(DOCUMENT_FOLDER)/{} \;
--	$(SED) $(SED_IN_PLACE) 's/\.\/hashcat/hashcat/'                         $(DESTDIR)$(DOCUMENT_FOLDER)/example0.sh
--	$(SED) $(SED_IN_PLACE) 's/\.\/hashcat/hashcat/'                         $(DESTDIR)$(DOCUMENT_FOLDER)/example400.sh
--	$(SED) $(SED_IN_PLACE) 's/\.\/hashcat/hashcat/'                         $(DESTDIR)$(DOCUMENT_FOLDER)/example500.sh
-+	$(INSTALL) -m 755 -d                                                    $(DESTDIR)$(BASHCOMP_FOLDER)
-+	$(INSTALL) -m 644 extra/tab_completion/hashcat.sh                       $(DESTDIR)$(BASHCOMP_FOLDER)/hashcat
+ ifeq ($(SHARED),1)
+-install: install_docs install_shared install_library install_library_dev install_kernels install_modules install_hashcat
++install: install_shared install_library install_library_dev install_kernels install_modules install_hashcat
+ else
+ install: install_docs install_shared                                     install_kernels install_modules install_hashcat
+ endif
+@@ -451,7 +448,7 @@ install_kernels: install_shared
+ install_modules: install_shared modules
+ 	$(INSTALL) -m 755 -d                                                    $(DESTDIR)$(SHARED_FOLDER)/modules
+ 	$(FIND) modules/  -mindepth 1 -type d -execdir $(INSTALL) -m 755 -d     $(DESTDIR)$(SHARED_FOLDER)/modules/{} \;
+-	$(FIND) modules/  -mindepth 1 -type f -execdir $(INSTALL) -m 644 {}     $(DESTDIR)$(SHARED_FOLDER)/modules/{} \;
++	$(FIND) modules/  -mindepth 1 -type f -execdir $(INSTALL) -m 755 {}     $(DESTDIR)$(SHARED_FOLDER)/modules/{} \;
  
- install_shared: install_make_shared_root
- 	$(INSTALL) -m 755 -d                                                    $(DESTDIR)$(SHARED_FOLDER)
+ install_library: $(HASHCAT_LIBRARY)
+ 	$(INSTALL) -m 755 -d                                                    $(DESTDIR)$(LIBRARY_FOLDER)
 -- 
 2.26.2
 

@@ -7,6 +7,8 @@
 %bcond_with zlib
 %endif
 
+%global makeflags PREFIX=%{_prefix} LIBRARY_FOLDER=%{_libdir} SHARED_ROOT_FOLDER=%{_libdir} DOCUMENT_FOLDER=%{_docdir}/hashcat-doc
+
 Name: hashcat
 Version: 6.0.0
 Release: 1%{?dist}
@@ -75,11 +77,12 @@ rm -rf deps/zlib
 %endif
 sed -e 's/\.\/hashcat/hashcat/' -i *.sh
 chmod -x *.sh
+rm -f modules/.lock
 
 %build
 %set_build_flags
 %make_build \
-    PREFIX=%{_prefix} \
+    %{makeflags} \
 %if %{with zlib}
     USE_SYSTEM_ZLIB=1
 %else
@@ -87,15 +90,17 @@ chmod -x *.sh
 %endif
 
 %install
-%make_install PREFIX=%{_prefix} LIBRARY_FOLDER=%{_libdir}
-ln -s lib%{name}.so.%{version} "%{buildroot}%{_libdir}/lib%{name}.so"
+%make_install %{makeflags}
+ln -s lib%{name}.so.%{version} %{buildroot}%{_libdir}/lib%{name}.so
+mkdir -p %{buildroot}%{_datadir}/bash-completion/completions
+install -m 0744 -p extra/tab_completion/hashcat.sh %{buildroot}%{_datadir}/bash-completion/completions/%{name}
 
 %files
 %license docs/license.txt
 %doc README.md
 %{_datadir}/bash-completion/completions/%{name}
 %{_libdir}/lib%{name}.so.%{version}
-%{_datadir}/%{name}
+%{_libdir}/%{name}/
 %{_bindir}/%{name}
 
 %files devel
@@ -103,8 +108,7 @@ ln -s lib%{name}.so.%{version} "%{buildroot}%{_libdir}/lib%{name}.so"
 %{_libdir}/lib%{name}.so
 
 %files doc
-%doc docs/{changes,contact,credits,limits,performance,readme,rules,status_codes,team,user_manuals}.txt
-%doc charsets/ layouts/ masks/ rules/
+%doc docs/ charsets/ layouts/ masks/ rules/
 %doc example.dict example*.sh
 
 %changelog

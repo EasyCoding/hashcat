@@ -1,4 +1,4 @@
-From c964c32b303b8a830a2ed92a4ffe123276813817 Mon Sep 17 00:00:00 2001
+From 659342642d7fbeae6a7ab1e584fa79017664a309 Mon Sep 17 00:00:00 2001
 From: Vitaly Zaitsev <vitaly@easycoding.org>
 Date: Wed, 17 Jun 2020 11:24:51 +0200
 Subject: [PATCH 2/2] Fixed build against packaged version of minizip.
@@ -24,10 +24,10 @@ index feaa5d90..a346a8e2 100644
  int hc_lzma1_decompress (const unsigned char *in, SizeT *in_len, unsigned char *out, SizeT *out_len, const char *props);
  int hc_lzma2_decompress (const unsigned char *in, SizeT *in_len, unsigned char *out, SizeT *out_len, const char *props);
 diff --git a/src/Makefile b/src/Makefile
-index 1befae34..68681baf 100644
+index f5799a75..034fe952 100644
 --- a/src/Makefile
 +++ b/src/Makefile
-@@ -218,7 +218,7 @@ endif
+@@ -217,7 +217,7 @@ endif
  # ZLIB
  CFLAGS                  += -I$(DEPS_ZLIB_PATH)
  ifeq ($(USE_SYSTEM_ZLIB),1)
