@@ -11,7 +11,7 @@
 
 Name: hashcat
 Version: 6.0.0
-Release: 1%{?dist}
+Release: 2%{?dist}
 Summary: Advanced password recovery utility
 
 License: MIT and Public Domain
@@ -112,6 +112,9 @@ install -m 0744 -p extra/tab_completion/hashcat.sh %{buildroot}%{_datadir}/bash-
 %doc example.dict example*.sh
 
 %changelog
+* Thu Jun 18 2020 Vitaly Zaitsev <vitaly@easycoding.org> - 6.0.0-2
+- Fixed packaging issues, related to modules.
+
 * Wed Jun 17 2020 Vitaly Zaitsev <vitaly@easycoding.org> - 6.0.0-1
 - Updated to version 6.0.0.
 
