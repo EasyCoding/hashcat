@@ -11,7 +11,7 @@
 
 Name: hashcat
 Version: 6.0.0
-Release: 2%{?dist}
+Release: 3%{?dist}
 Summary: Advanced password recovery utility
 
 License: MIT and Public Domain
@@ -20,6 +20,9 @@ Source0: %{url}/archive/v%{version}/%{name}-%{version}.tar.gz
 
 Patch0: %{name}-build-fixes.patch
 Patch1: %{name}-packaged-minizip.patch
+
+# https://github.com/hashcat/hashcat/issues/2463
+Patch100: %{name}-nvidia-opencl.patch
 
 BuildRequires: bash-completion
 BuildRequires: opencl-headers
@@ -70,6 +73,7 @@ BuildArch: noarch
 %prep
 %setup -q
 %patch0 -p1
+%patch100 -p1
 rm -rf deps/{OpenCL-Headers,xxHash}
 %if %{with zlib}
 %patch1 -p1
@@ -112,6 +116,9 @@ install -m 0744 -p extra/tab_completion/hashcat.sh %{buildroot}%{_datadir}/bash-
 %doc example.dict example*.sh
 
 %changelog
+* Fri Jun 19 2020 Vitaly Zaitsev <vitaly@easycoding.org> - 6.0.0-3
+- Backported upstream patch with NVIDIA OpenCL fixes.
+
 * Thu Jun 18 2020 Vitaly Zaitsev <vitaly@easycoding.org> - 6.0.0-2
 - Fixed packaging issues, related to modules.
 
