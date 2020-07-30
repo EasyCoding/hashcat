@@ -11,7 +11,7 @@
 
 Name: hashcat
 Version: 6.0.0
-Release: 3%{?dist}
+Release: 4%{?dist}
 Summary: Advanced password recovery utility
 
 License: MIT and Public Domain
@@ -116,6 +116,9 @@ install -m 0744 -p extra/tab_completion/hashcat.sh %{buildroot}%{_datadir}/bash-
 %doc example.dict example*.sh
 
 %changelog
+* Tue Jul 28 2020 Fedora Release Engineering <releng@fedoraproject.org> - 6.0.0-4
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
+
 * Fri Jun 19 2020 Vitaly Zaitsev <vitaly@easycoding.org> - 6.0.0-3
 - Backported upstream patch with NVIDIA OpenCL fixes.
 
