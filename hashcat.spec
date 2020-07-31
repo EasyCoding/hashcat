@@ -7,30 +7,31 @@
 %bcond_with zlib
 %endif
 
-%global makeflags PREFIX=%{_prefix} LIBRARY_FOLDER=%{_libdir} SHARED_ROOT_FOLDER=%{_libdir} DOCUMENT_FOLDER=%{_docdir}/hashcat-doc
+%global makeflags PREFIX=%{_prefix} LIBRARY_FOLDER=%{_libdir} SHARED_ROOT_FOLDER=%{_libdir} DOCUMENT_FOLDER=%{_docdir}/hashcat-doc SHARED=1 USE_SYSTEM_OPENCL=1 USE_SYSTEM_XXHASH=1
+
+%if %{with zlib}
+%global makeflags %(echo %{makeflags} USE_SYSTEM_ZLIB=1)
+%else
+%global makeflags %(echo %{makeflags} USE_SYSTEM_ZLIB=0)
+%endif
 
 Name: hashcat
-Version: 6.0.0
-Release: 4%{?dist}
+Version: 6.1.1
+Release: 1%{?dist}
 Summary: Advanced password recovery utility
 
 License: MIT and Public Domain
 URL: https://github.com/%{name}/%{name}
 Source0: %{url}/archive/v%{version}/%{name}-%{version}.tar.gz
-
 Patch0: %{name}-build-fixes.patch
-Patch1: %{name}-packaged-minizip.patch
-
-# https://github.com/hashcat/hashcat/issues/2463
-Patch100: %{name}-nvidia-opencl.patch
 
 BuildRequires: bash-completion
 BuildRequires: opencl-headers
 BuildRequires: xxhash-devel
-BuildRequires: zlib-devel
 BuildRequires: gcc
 
 %if %{with zlib}
+BuildRequires: zlib-devel
 BuildRequires: minizip-compat-devel
 %else
 Provides: bundled(zlib) = 1.2.11
@@ -71,12 +72,9 @@ BuildArch: noarch
 %{summary}.
 
 %prep
-%setup -q
-%patch0 -p1
-%patch100 -p1
+%autosetup -p1
 rm -rf deps/{OpenCL-Headers,xxHash}
 %if %{with zlib}
-%patch1 -p1
 rm -rf deps/zlib
 %endif
 sed -e 's/\.\/hashcat/hashcat/' -i *.sh
@@ -85,13 +83,7 @@ rm -f modules/.lock
 
 %build
 %set_build_flags
-%make_build \
-    %{makeflags} \
-%if %{with zlib}
-    USE_SYSTEM_ZLIB=1
-%else
-    USE_SYSTEM_ZLIB=0
-%endif
+%make_build %{makeflags}
 
 %install
 %make_install %{makeflags}
@@ -116,6 +108,9 @@ install -m 0744 -p extra/tab_completion/hashcat.sh %{buildroot}%{_datadir}/bash-
 %doc example.dict example*.sh
 
 %changelog
+* Fri Jul 31 2020 Vitaly Zaitsev <vitaly@easycoding.org> - 6.1.1-1
+- Updated to version 6.1.1.
+
 * Tue Jul 28 2020 Fedora Release Engineering <releng@fedoraproject.org> - 6.0.0-4
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
 
