@@ -17,7 +17,7 @@
 
 Name: hashcat
 Version: 6.1.1
-Release: 1%{?dist}
+Release: 2%{?dist}
 Summary: Advanced password recovery utility
 
 License: MIT and Public Domain
@@ -29,6 +29,7 @@ BuildRequires: bash-completion
 BuildRequires: opencl-headers
 BuildRequires: xxhash-devel
 BuildRequires: gcc
+BuildRequires: make
 
 %if %{with zlib}
 BuildRequires: zlib-devel
@@ -108,6 +109,9 @@ install -m 0744 -p extra/tab_completion/hashcat.sh %{buildroot}%{_datadir}/bash-
 %doc example.dict example*.sh
 
 %changelog
+* Tue Jan 26 2021 Fedora Release Engineering <releng@fedoraproject.org> - 6.1.1-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_34_Mass_Rebuild
+
 * Fri Jul 31 2020 Vitaly Zaitsev <vitaly@easycoding.org> - 6.1.1-1
 - Updated to version 6.1.1.
 
