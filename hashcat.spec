@@ -7,7 +7,7 @@
 %bcond_with zlib
 %endif
 
-%global makeflags PREFIX=%{_prefix} LIBRARY_FOLDER=%{_libdir} SHARED_ROOT_FOLDER=%{_libdir} DOCUMENT_FOLDER=%{_docdir}/hashcat-doc SHARED=1 USE_SYSTEM_OPENCL=1 USE_SYSTEM_XXHASH=1
+%global makeflags PREFIX=%{_prefix} LIBRARY_FOLDER=%{_libdir} SHARED_ROOT_FOLDER=%{_libdir} DOCUMENT_FOLDER=%{_docdir}/hashcat-doc SHARED=1 USE_SYSTEM_OPENCL=1 USE_SYSTEM_XXHASH=1 ENABLE_UNRAR=0
 
 %if %{with zlib}
 %global makeflags %(echo %{makeflags} USE_SYSTEM_ZLIB=1)
@@ -16,13 +16,18 @@
 %endif
 
 Name: hashcat
-Version: 6.1.1
-Release: 2%{?dist}
-Summary: Advanced password recovery utility
+Version: 6.2.1
+Release: 1%{?dist}
 
 License: MIT and Public Domain
 URL: https://github.com/%{name}/%{name}
-Source0: %{url}/archive/v%{version}/%{name}-%{version}.tar.gz
+Summary: Advanced password recovery utility
+
+# The official upstream tarball contains some non-free components.
+# We cannot use it on Fedora for legal reasons.
+# Use ./make_tarball.sh to generate a new stripped tarball.
+Source0: %{name}-%{version}-clean.tar.xz
+Source1: make_tarball.sh
 Patch0: %{name}-build-fixes.patch
 
 BuildRequires: bash-completion
@@ -109,42 +114,8 @@ install -m 0744 -p extra/tab_completion/hashcat.sh %{buildroot}%{_datadir}/bash-
 %doc example.dict example*.sh
 
 %changelog
+* Sat May 15 2021 Vitaly Zaitsev <vitaly@easycoding.org> - 6.2.1-1
+- Updated to version 6.2.1.
+
 * Tue Jan 26 2021 Fedora Release Engineering <releng@fedoraproject.org> - 6.1.1-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_34_Mass_Rebuild
-
-* Fri Jul 31 2020 Vitaly Zaitsev <vitaly@easycoding.org> - 6.1.1-1
-- Updated to version 6.1.1.
-
-* Tue Jul 28 2020 Fedora Release Engineering <releng@fedoraproject.org> - 6.0.0-4
-- Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
-
-* Fri Jun 19 2020 Vitaly Zaitsev <vitaly@easycoding.org> - 6.0.0-3
-- Backported upstream patch with NVIDIA OpenCL fixes.
-
-* Thu Jun 18 2020 Vitaly Zaitsev <vitaly@easycoding.org> - 6.0.0-2
-- Fixed packaging issues, related to modules.
-
-* Wed Jun 17 2020 Vitaly Zaitsev <vitaly@easycoding.org> - 6.0.0-1
-- Updated to version 6.0.0.
-
-* Tue Feb 25 2020 Vitaly Zaitsev <vitaly@easycoding.org> - 5.1.0-7
-- Allow to install without mesa-libOpenCL.
-- Added pocl as a weak dependency on Fedora.
-
-* Wed Jan 29 2020 Fedora Release Engineering <releng@fedoraproject.org> - 5.1.0-6
-- Rebuilt for https://fedoraproject.org/wiki/Fedora_32_Mass_Rebuild
-
-* Thu Jul 25 2019 Fedora Release Engineering <releng@fedoraproject.org> - 5.1.0-5
-- Rebuilt for https://fedoraproject.org/wiki/Fedora_31_Mass_Rebuild
-
-* Sun Feb 24 2019 Vitaly Zaitsev <vitaly@easycoding.org> - 5.1.0-4
-- Switched to regular build instead of debug.
-
-* Mon Feb 18 2019 Vitaly Zaitsev <vitaly@easycoding.org> - 5.1.0-3
-- Fixed problem with dependencies on EPEL7.
-
-* Thu Feb 07 2019 Vitaly Zaitsev <vitaly@easycoding.org> - 5.1.0-2
-- Moved documentation to a separate package.
-
-* Wed Feb 06 2019 Vitaly Zaitsev <vitaly@easycoding.org> - 5.1.0-1
-- Initial SPEC release.
