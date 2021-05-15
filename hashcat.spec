@@ -30,7 +30,6 @@ Source0: %{name}-%{version}-clean.tar.xz
 Source1: make_tarball.sh
 Patch0: %{name}-build-fixes.patch
 
-BuildRequires: bash-completion
 BuildRequires: opencl-headers
 BuildRequires: xxhash-devel
 BuildRequires: gcc
@@ -44,7 +43,6 @@ Provides: bundled(zlib) = 1.2.11
 Provides: bundled(minizip) = 1.2.11
 %endif
 
-Requires: bash-completion
 %if 0%{?fedora}
 Recommends: mesa-libOpenCL%{?_isa}
 Recommends: pocl%{?_isa}
@@ -100,7 +98,7 @@ install -m 0744 -p extra/tab_completion/hashcat.sh %{buildroot}%{_datadir}/bash-
 %files
 %license docs/license.txt
 %doc README.md
-%{_datadir}/bash-completion/completions/%{name}
+%{_datadir}/bash-completion/
 %{_libdir}/lib%{name}.so.%{version}
 %{_libdir}/%{name}/
 %{_bindir}/%{name}
