@@ -1,4 +1,4 @@
-From 2b730180e108289cea3c6ffb1cbb7fdc72d96a38 Mon Sep 17 00:00:00 2001
+From f028513101dbcfb4b315abfc18a478dda35ac6d8 Mon Sep 17 00:00:00 2001
 From: Vitaly Zaitsev <vitaly@easycoding.org>
 Date: Wed, 17 Jun 2020 10:57:15 +0200
 Subject: [PATCH] Fedora build patches.
@@ -8,10 +8,10 @@ Subject: [PATCH] Fedora build patches.
  1 file changed, 4 insertions(+), 7 deletions(-)
 
 diff --git a/src/Makefile b/src/Makefile
-index c2441456..d9143d69 100644
+index b79a59ac5..be4b35096 100644
 --- a/src/Makefile
 +++ b/src/Makefile
-@@ -40,7 +40,7 @@ endif
+@@ -43,7 +43,7 @@ endif
  ## Makefile flags
  ##
  
@@ -20,7 +20,7 @@ index c2441456..d9143d69 100644
  
  ifneq ($(findstring clean,$(MAKECMDGOALS)),)
  MAKEFLAGS               += -j 1
-@@ -186,10 +186,7 @@ CFLAGS_ZLIB             += -DIOAPI_NO_64
+@@ -222,10 +222,7 @@ endif
  endif
  
  ifeq ($(DEBUG),0)
@@ -32,24 +32,24 @@ index c2441456..d9143d69 100644
  else
  ifeq ($(DEBUG),1)
  ifneq ($(UNAME),Darwin)
-@@ -397,7 +394,7 @@ Only Linux, FreeBSD and Darwin can use the 'install' target
- endif
+@@ -461,7 +458,7 @@ endif
  
+ .PHONY: install
  ifeq ($(SHARED),1)
 -install: install_docs install_shared install_library install_library_dev install_kernels install_modules install_hashcat
 +install: install_shared install_library install_library_dev install_kernels install_modules install_hashcat
  else
  install: install_docs install_shared                                     install_kernels install_modules install_hashcat
  endif
-@@ -457,7 +454,7 @@ install_kernels: install_shared
+@@ -527,7 +524,7 @@ install_kernels: install_shared
  install_modules: install_shared modules
  	$(INSTALL) -m 755 -d                                                    $(DESTDIR)$(SHARED_FOLDER)/modules
  	$(FIND) modules/  -mindepth 1 -type d -execdir $(INSTALL) -m 755 -d     $(DESTDIR)$(SHARED_FOLDER)/modules/{} \;
 -	$(FIND) modules/  -mindepth 1 -type f -execdir $(INSTALL) -m 644 {}     $(DESTDIR)$(SHARED_FOLDER)/modules/{} \;
 +	$(FIND) modules/  -mindepth 1 -type f -execdir $(INSTALL) -m 755 {}     $(DESTDIR)$(SHARED_FOLDER)/modules/{} \;
  
+ .PHONY: install_library
  install_library: $(HASHCAT_LIBRARY)
- 	$(INSTALL) -m 755 -d                                                    $(DESTDIR)$(LIBRARY_FOLDER)
 -- 
-2.26.2
+2.31.1
 
