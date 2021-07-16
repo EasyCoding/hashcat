@@ -30,9 +30,6 @@ Source0: %{name}-%{version}-clean.tar.xz
 Source1: make_tarball.sh
 Patch0: %{name}-build-fixes.patch
 
-# https://github.com/hashcat/hashcat/commit/8ebf4b98584213891f6e48570c91c31d22b80a81
-Patch100: %{name}-e-rule-fixes.patch
-
 BuildRequires: opencl-headers
 BuildRequires: xxhash-devel
 BuildRequires: gcc
