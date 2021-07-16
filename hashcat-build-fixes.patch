@@ -1,4 +1,4 @@
-From f41879a099fceaef0a1a648dc78a2437006b2866 Mon Sep 17 00:00:00 2001
+From 29e1849f5d9df10d0b28654f8ab4c9ccf3c8a37e Mon Sep 17 00:00:00 2001
 From: Vitaly Zaitsev <vitaly@easycoding.org>
 Date: Wed, 17 Jun 2020 10:57:15 +0200
 Subject: [PATCH] Fedora build patches.
@@ -8,7 +8,7 @@ Subject: [PATCH] Fedora build patches.
  1 file changed, 4 insertions(+), 7 deletions(-)
 
 diff --git a/src/Makefile b/src/Makefile
-index 2c691bc47..d55b7b5ba 100644
+index 943bf2405..395241025 100644
 --- a/src/Makefile
 +++ b/src/Makefile
 @@ -43,7 +43,7 @@ endif
@@ -32,7 +32,7 @@ index 2c691bc47..d55b7b5ba 100644
  else
  ifeq ($(DEBUG),1)
  ifneq ($(UNAME),Darwin)
-@@ -467,7 +464,7 @@ endif
+@@ -463,7 +460,7 @@ endif
  
  .PHONY: install
  ifeq ($(SHARED),1)
@@ -41,7 +41,7 @@ index 2c691bc47..d55b7b5ba 100644
  else
  install: install_docs install_shared                                     install_kernels install_modules install_hashcat
  endif
-@@ -533,7 +530,7 @@ install_kernels: install_shared
+@@ -529,7 +526,7 @@ install_kernels: install_shared
  install_modules: install_shared modules
  	$(INSTALL) -m 755 -d                                                    $(DESTDIR)$(SHARED_FOLDER)/modules
  	$(FIND) modules/  -mindepth 1 -type d -execdir $(INSTALL) -m 755 -d     $(DESTDIR)$(SHARED_FOLDER)/modules/{} \;
