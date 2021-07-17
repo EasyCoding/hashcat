@@ -2,7 +2,7 @@
 set -e
 
 NAME="hashcat"
-VERSION="6.2.2"
+VERSION="6.2.3"
 
 TARBALL_DIR="$NAME-$VERSION"
 TARBALL_ORIG="$NAME-$VERSION.tar.gz"
